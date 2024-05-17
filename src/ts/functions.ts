@@ -11,6 +11,7 @@ export function addTodo(todoText: string, todos: Todo[]): IAddResponse {
   }
 }
 
+
 export function changeTodo(todo: Todo) {
   todo.done = !todo.done;
 }
