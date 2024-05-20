@@ -1,4 +1,4 @@
-import { createNewTodo, toggleTodo } from "../ts/main";
+import { createNewTodo, toggleTodo, clearTodos } from "../ts/main";
 import { IAddResponse } from "../ts/models/IAddResponse";
 import { Todo } from "../ts/models/todo";
 
@@ -10,12 +10,14 @@ describe("main tests", () => {
     let mockedCreateHtml: jest.SpyInstance<void>;
     let mockedDisplayError: jest.SpyInstance<void>;
     let mockedChangeTodo: jest.SpyInstance<void>; 
+    let mockedRemoveAllTodos: jest.SpyInstance<void>; 
 
     beforeEach(() => {
         mockedAddTodo = jest.spyOn(functions, "addTodo");
         mockedCreateHtml = jest.spyOn(htmlFunctions, "createHtml");
         mockedDisplayError = jest.spyOn(htmlFunctions, "displayError");
         mockedChangeTodo = jest.spyOn(functions, "changeTodo"); 
+        mockedRemoveAllTodos = jest.spyOn(functions, "removeAllTodos");
     })
 
     afterEach(() => {
@@ -23,6 +25,7 @@ describe("main tests", () => {
         mockedCreateHtml.mockReset(); 
         mockedDisplayError.mockReset(); 
         mockedChangeTodo.mockReset(); 
+        mockedRemoveAllTodos.mockReset(); 
     })
  
     test("it should add the todo and call createHtml", () => {
@@ -58,5 +61,13 @@ describe("main tests", () => {
 
         expect(mockedChangeTodo).toHaveBeenCalled(); 
         expect(mockedCreateHtml).toHaveBeenCalled();  
+    })
+
+    test("it should call removeAllTodos", () => {
+        const todos: Todo[] = [];
+        
+        clearTodos(todos); 
+
+        expect(mockedRemoveAllTodos).toHaveBeenCalled(); 
     })
 } )
